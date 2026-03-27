@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerControler : MonoBehaviour
 {
+    public bool isOnGround = true;
     private Rigidbody playerRB;
     public float jumpForce = 10;
     public float gravityModifier;
@@ -16,9 +17,14 @@ public class PlayerControler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
         {
-            playerRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            playerRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
+            isOnGround = false;
         }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        isOnGround = true;
     }
 }
